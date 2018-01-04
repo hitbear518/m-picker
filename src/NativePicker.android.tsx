@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, PixelRatio, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, PixelRatio, Text, TouchableWithoutFeedback } from 'react-native';
 import PickerMixin from './PickerMixin';
 import { IPickerProps } from './PickerTypes';
 
@@ -125,13 +125,16 @@ class Picker extends React.Component<IPickerProp & IPickerProps, any> {
       }
       totalStyle.push(itemStyle);
       return (
-        <View
+        <TouchableWithoutFeedback
           ref={el => this[`item${index}`] = el}
           onLayout={index === 0 ? this.onItemLayout : undefined}
           key={item.key}
+          onPress={() => this.fireValueChange(item.props.value)}
         >
-          <Text style={totalStyle} numberOfLines={1}>{item.props.label}</Text>
-        </View>
+          <View>
+            <Text style={totalStyle} numberOfLines={1}>{item.props.label}</Text>
+          </View>
+        </TouchableWithoutFeedback>
       );
     });
     return (
